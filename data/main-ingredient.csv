@@ -1,0 +1,4 @@
+name,category,protein_per_100g,carbs_per_100g,fat_per_100g,calories_per_100g,pairs_with
+Pasta,Carbohydrate,100,2,3,1,Potato
+Butter,Dairy,2,2,200,300,
+Potato,Carbohydrate,2,40,34,2,Pasta

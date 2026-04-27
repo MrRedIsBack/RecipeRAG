@@ -1,0 +1,3 @@
+name,description,ingredients,instructions,total_time,cost,rating,contains,belongs_to,has_tag,similar_to
+Butter Pasta,An amazing and simple recipe,"Pasta, butter, salt, pepper",Just yeah,1,1,8,Pasta,Italian,High calories,mac n cheese
+mac n cheese,Very delish,"Pasta, cheese, milk",Easy shit,2,3,10,Pasta,Italian,High calories,Butter Pasta

@@ -1,0 +1,4 @@
+ingredient_id,name,category,protein_per_100g,carbs_per_100g,fat_per_100g,calories_per_100g
+1,Pasta,Carbohydrate,100,2,3,1
+2,Butter,Dairy,2,2,200,300
+3,Potato,Carbohydrate,2,40,34,2
