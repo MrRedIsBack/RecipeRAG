@@ -1,14 +1,14 @@
 NODES = Recipe, Cuisine, Main_Ingredient, Diet_Tag (Low Calorie, High Protein, etc)
-EDGES = Contains, Belongs_To, Has_Tag, Pairs_With (For Ingredients), Similar_To (For Recipes)
+EDGES = CONTAINS, BELONGS_TO, HAS_TAG, PAIRS_WITH (For Ingredients), SIMILAR_TO (For Recipes)
 
 Recipe Properties:
 -recipe_id INT
 -name STR
 -description STR
--ingredients_text STR
--instructions_text STR
--total_time (Low (1), Medium (2), High (3)) INT
--cost (Low(1), Medium (2), High (3)) INT
+-ingredients STR (This is a block of text and you can list all the ingredients, instead of just the main ones.)
+-instructions STR
+-total_time INTERVAL (Stored as HH:MM:SS)
+-cost DOUBLE
 -rating (1 to 10) INT
 -date_added TIMESTAMP
 
@@ -26,10 +26,10 @@ Main_Ingredient:
 -ingredient_id INT
 -name STR
 -category STR
--protein_per_100g INT
--carbs_per_100g INT
--fat_per_100g INT
--calories_per_100g INT
+-protein_per_100g DOUBLE
+-carbs_per_100g DOUBLE
+-fat_per_100g DOUBLE
+-calories_per_100g DOUBLE
 
 Main_Ingredient PAIRS_WITH Main_Ingredient
 
