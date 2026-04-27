@@ -5,6 +5,7 @@ recipe_csv="./data/node/recipe.csv"
 cuisine_csv="./data/node/cuisine.csv"
 main_ingredient_csv="./data/node/main_ingredient.csv"
 diet_tag_csv="./data/node/diet_tag.csv"
+
 #The locations for the relationship databases
 contains_csv="./data/relation/contains.csv"
 belongs_to_csv="./data/relation/belongs_to.csv"
@@ -14,8 +15,8 @@ pairs_with_csv="./data/relation/pairs_with.csv"
 
 def main():
     # Create an empty on-disk database and connect to it
-    db = lb.Database("recipe_database.lbug")
-    conn = lb.Connection(db)
+    db=lb.Database("recipe_database.lbug")
+    conn=lb.Connection(db)
 
     #Create the Node tables
     conn.execute("""
