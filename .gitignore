@@ -1,0 +1,5 @@
+# Ignore the recipe database file
+recipe_database.lbug
+
+# Ignore the environment variable file
+*.env
