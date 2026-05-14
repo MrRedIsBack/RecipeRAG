@@ -1,11 +1,13 @@
 import real_ladybug as lb
 
-import os
+from thefuzz import process
 
-import csv
 
 nodes_path = "./data/node/"
 relations_path = "./data/relation/"
+
+db = lb.Database("recipe_database.lbug")
+conn = lb.Connection(db)
 
 def main():
     while True:
@@ -19,59 +21,63 @@ def main():
         if choice == 1:
             print("Editing the database...")
 
-            #Grab all the files in the node path
-            files_list = os.listdir(nodes_path)
-            nodes_list = []
+            current_tables = conn.execute("CALL show_tables() RETURN *")
 
-            #Only add files that end with csv, although no other files should be in there
-            for file in files_list:
-                if file.endswith(".csv"):
-                    nodes_list.append(file[:-4:])
+            existing_nodes = []
+            existing_relations = []
 
-            #First, print the available node tables and ask the user which one they want to edit
+            # Loop through the current tables in the database and categorise them as nodes or relations
+            while current_tables.has_next():
+                table_row = current_tables.get_next()
+                table_name = table_row[1]
+                table_type = table_row[2]
+
+                if table_type == "NODE":
+                    existing_nodes.append(table_name)
+                elif table_type == "REL":
+                    existing_relations.append(table_name)
+
+            print("Existing Nodes:")
+            print(existing_nodes)
+            print("Existing Relations:")
+            print(existing_relations)
+
+            # First, print the available node tables and ask the user which one they want to edit
             print("The following node tables are available: ")
-            for node in nodes_list:
+            for node in existing_nodes:
                 print(f" - {node}")
             edit_node = str(input("Which node table would you like to edit? Type None to go to edit the edges instead. \n"))
 
             if edit_node.lower() == "none":
                 pass
 
-            ### This currently goes back to the main menu, but I want it to instead go back to the edit_node = str(input())
-            elif edit_node.lower() not in nodes_list:
-                print("Invalid node table selected.")
-                continue
+            # Use the fuzz library to find the most similar existing node table to the user's input and suggest it to them
+            most_similar_node = process.extract(edit_node, existing_nodes, limit=1)[0][0] #process.extract returns a list of tuples, where each tuple contains the matched string and its similarity score. We take the first tuple (the most similar match) and then take the first element of that tuple (the matched string) to get the most similar node table name
+
+            correct_node = str(input(f"Did you mean {most_similar_node}? Type y/n to confirm. \n"))
+
+            if correct_node.lower() == "y" or correct_node.lower() == "yes":
+                edit_node = most_similar_node
+
+                schema_info = conn.execute(f"CALL TABLE_INFO('{edit_node}') RETURN *")
+
+                #Create a dictionary to store the column names and their data types
+                columns = {}
+
+                while schema_info.has_next():
+                    column_row = schema_info.get_next()
+                    column_name = column_row[1]
+                    column_data_type = column_row[2]
+
+                    columns[column_name] = column_data_type
+
+                    print(f"Column Name: {column_name}, Column Type: {column_data_type}")
+
+                print(columns)
 
             else:
-                print(f"Editing the {edit_node} node table...")
-                file = os.path.join(nodes_path,edit_node+".csv")
-                
-                # We are going to get the last id to make sure we have unique ids
-                # We are also getting the header names so we can loop through them and ask the user for the relevant information
-                with open(file, mode='r') as csv_file:
-
-                    headers = csv_file.readline().strip().split(",")
-                    #headers = headers[] # Skip the first column as that is the primary key and should not be edited
-
-                    print(headers)
-
-                    try:
-                        last_id = int(csv_file.readlines()[-1].strip().split(",")[0])
-
-                    except ValueError:
-                        print("Something went wrong with reading the last id. Please check the csv file and make sure it is formatted correctly.")
-                        print("Setting last_id to 1 in case the csv is just empty.")
-                        last_id = 1
-
-                ### Massive issue with data types
-                print("Please enter the following information: ")
-                new_entry = [str(int(last_id)+1)]
-                print(headers)
-                for header in headers[1:]:
-                    value = input(f"{header}: ")
-                    new_entry.append(value)
-
-                print(f"New entry: {new_entry}")
+                print("No similar node table found. Please try again.")
+                continue
 
         elif choice == 2:
             print("Viewing the database...")
