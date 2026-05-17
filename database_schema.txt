@@ -2,7 +2,7 @@ NODES = Recipe, Cuisine, Main_Ingredient, Diet_Tag (Low Calorie, High Protein, e
 EDGES = CONTAINS, BELONGS_TO, HAS_TAG, PAIRS_WITH (For Ingredients), SIMILAR_TO (For Recipes)
 
 Recipe Properties:
--recipe_id UINT32
+-recipe_id UUID
 -name STR
 -description STR
 -ingredients STR (This is a block of text and you can list all the ingredients, instead of just the main ones.)
@@ -18,12 +18,12 @@ Recipe HAS_TAG Diet_Tag
 Recipe SIMILAR_TO Recipe
 
 Cuisine Properties:
--cuisine_id UINT16
+-cuisine_id UUID
 -name STR
 -region STR
 
 Main_Ingredient:
--ingredient_id UINT16
+-ingredient_id UUID
 -name STR
 -category STR
 -protein_per_100g DOUBLE

@@ -21,25 +21,25 @@ def main():
     #Create the Node tables
     conn.execute("""
         CREATE NODE TABLE Recipe (
-            recipe_id UINT32 PRIMARY KEY,
+            recipe_id UUID PRIMARY KEY,
             name STRING,
             description STRING,
             ingredients STRING,
             instructions STRING,
             total_time INTERVAL,
             cost DOUBLE,
-            rating UINT8,
+            rating INT8,
             date_added TIMESTAMP
         )""")
     conn.execute("""
         CREATE NODE TABLE Cuisine (
-            cuisine_id UINT16 PRIMARY KEY,
+            cuisine_id UUID PRIMARY KEY,
             name STRING,
             region STRING
         )""")
     conn.execute("""
         CREATE NODE TABLE Main_Ingredient (
-            ingredient_id UINT16 PRIMARY KEY,
+            ingredient_id UUID PRIMARY KEY,
             name STRING,
             category STRING,
             protein_per_100g DOUBLE,
@@ -49,7 +49,7 @@ def main():
         )""")
     conn.execute("""
         CREATE NODE TABLE Diet_Tag (
-            diet_id UINT16 PRIMARY KEY,
+            diet_id UUID PRIMARY KEY,
             name STRING
         )""")
 
