@@ -6,3 +6,6 @@ recipe_database.lbug
 
 #Ignore my testing file
 testing.py
+
+#Ignore the pycache that is used by utils.py
+__pycache__/
