@@ -3,3 +3,6 @@ recipe_database.lbug
 
 # Ignore the environment variable file
 *.env
+
+#Ignore my testing file
+testing.py
