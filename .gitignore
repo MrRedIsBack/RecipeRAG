@@ -1,5 +1,6 @@
 # Ignore the recipe database file
 recipe_database.lbug
+recipe_database.lbug.wal
 
 # Ignore the environment variable file
 *.env
@@ -7,5 +8,6 @@ recipe_database.lbug
 #Ignore my testing file
 testing.py
 
-#Ignore the pycache that is used by utils.py
+#Ignore whatever these do
 __pycache__/
+/.chainlit
